@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>ffEngine实时服务器云平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="../inc/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="../inc/css/flat-ui.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="./Public/images/favicon.ico">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+
+		<div class="row">
+			<div class="span6"><div class="row"><h1 class="demo-panel-title">ffEngine 实时服务器云平台</h1></div></div>
+			<div class="span6"><div class="row" height="20px"></br></br></br></div>
+				<div class="row"><h4>面向于端游、页游、手游服务器程序的云托管平台</h4></div>
+			</div>
+		</div>
+
+		<div class="row ">
+			<div >
+			  <div class="navbar navbar-inverse">
+				<div class="navbar-inner">
+				  <div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-01"></button>
+					<div class="nav-collapse collapse" id="nav-collapse-01">
+					  <ul class="nav">
+						<li>
+						  <a href="./index.php">
+							首页
+							<!-- <span class="navbar-unread">1</span>-->
+						  </a>
+						</li>
+						<li>
+						  <a href="./index.php?c=Ctrl&a=loginMenu">
+							登陆
+							<!-- <span class="navbar-unread">1</span>-->
+						  </a>
+						</li>
+						<li>
+						  <a href="./index.php?c=Ctrl&a=registerMenu">
+							注册
+							<!-- <span class="navbar-unread">1</span>-->
+						  </a>
+						</li>
+						<!-- <li class="active">-->
+						<li>
+						  <a href="#fakelink">
+							配置服务器
+							<!-- <span class="navbar-unread">1</span>-->
+						  </a>
+						  <ul>
+							<li><a href="./index.php?c=Ctrl&a=showServerListMenu">区组管理</a></li>
+							
+							<li><a href="#fakelink">服务器管理</a></li>
+						  </ul> <!-- /Sub menu -->
+						</li>
+						<li>
+						  <a href="#fakelink">
+							文档
+						  </a>
+						</li>
+                        <li>
+						  <a href="http://ffbbs.sinaapp.com">
+							论坛
+						  </a>
+						</li>
+						<li>
+						  <a href="#fakelink">
+							关于
+						  </a>
+						</li>
+					  </ul>
+					</div><!--/.nav -->
+				  </div>
+				</div>
+			  </div>
+			</div>
+        
+		</div> <!-- /row -->
+		<div class="row demo-row">
+			<div  > <h3>上下左右控制角色移动, 角色自动分配一个名字，如果想看到另外一个角色可以再打开一个页面, <a href="#pycode">服务器源码</a> </h3></div>
+            
+			<div id ="cr-stage" ></div>
+			<div id="ShowMarkDown">
+			</div>
+			<div id="ShowMarkDown2">
+				<h3>Thrift 消息定义 </h3>
+				<pre class='brush: cpp'>
+namespace cpp ff  
+namespace as3 ff  
+namespace py ff  
+
+enum client_cmd_e {
+    LOGIN_REQ = 1
+	INPUT_REQ
+}
+
+enum server_cmd_e {
+    LOGIN_RET = 1
+	INPUT_RET
+	LOGOUT_RET
+}
+
+// 这里定义了一个结构体，没有定义方法，对应于生成的代码在gen-cpp中的shared_types.h中，其中有一个class叫SharedStruct,  
+// 有没有看到其中有两个方法叫read和write，这就是用来对其进行序列化与把序列化的方法.  
+// 对了，其中的i32是Thrift IDL中定义的变量类型，对应于c++语言中的int32_t  
+// thrift-0.9.0.exe -gen as3 -o as3
+// thrift-0.9.0.exe -gen py -o py
+
+
+struct login_ret_t{
+	1:i32 id = 0
+    2:string name
+	3:i32 x = 0
+	4:i32 y = 0
+	5:i32 speed = 3 #默认3
+}
+struct input_req_t{
+    1:string ops
+}
+struct input_ret_t{
+	1:i32 id = 0
+	2:string ops
+    3:i32 x  = 0
+	4:i32 y  = 0
+}
+
+struct logout_ret_t{
+	1:i32 id = 0
+}
+
+				</pre>
+			</div>
+			<div id="ShowMarkDown3">
+			</div>
+		</div>
+	</div> <!-- /container -->
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="span7">
+            <h3 class="footer-title">参与其中</h3>
+            <p>ffEngine为开源项目，如果你也感兴趣，一起来贡献力量！</p>
+			<p>Code Repository ：<a href="https://github.com/fanchy/ffengine" target="_blank">https://github.com/fanchy/ffengine</a></p>
+			<p>Email：zxfown@gmail.com<p/>
+			<p>Weibo： <a href="http://weibo.com/zxfown" target="_blank"> http://weibo.com/zxfown </a> </p>
+			<p>QQ: 693654841 </p>
+			<p>Blog:  <a href="http://www.cnblogs.com/zhiranok" target="_blank"> http://www.cnblogs.com/zhiranok </a></p>
+          </div> <!-- /span8 -->
+
+          <div class="span5">
+            <div class="footer-banner">
+              <h3 class="footer-title">SLOGAN</h3>
+              <ul>
+                <li>无聊梦见忧郁，找到理想不太易</li>
+                <li>理想有日达成，找到心底梦想的世界</li>
+                <li>BEYOND！</li>
+              </ul>
+			  <h3 >COPYRIGHT</h3>
+			  <p> <a href="http://www.bootcss.com/" target="_blank">致谢Boostrap</a></p>
+			  <p> <a href="http://www.bootcss.com/p/flat-ui/" target="_blank">致谢FLAT UI</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <div id="div" style="display: none">
+		<textarea id="SrcMarkDown" cols="80" rows="20" class="pane">
+# <a name="pycode"> 服务器Python实现代码 </a>
+<pre class='brush: cpp'>
+# -*- coding: utf-8 -*-
+import ffext
+import ff
+from user_data import ttypes
+import time
+import msg_def.ttypes as msg_def
+import random
+
+MAX_X = 800
+MAX_Y = 640
+MOVE_SPEED = 3
+
+class player_t:
+    def __init__(self):
+        self.id = 0
+        self.name = ''
+        self.x = 0
+        self.y = 0
+        self.last_move_tm = time.time()
+
+def init():
+    print('init......')
+    return 0
+    
+
+def cleanup():
+    print('cleanup.....')
+    return 0
+
+@ffext.on_verify
+def real_session_verify(session_verify): #session_key,
+    print('real_session_verify')
+    session_verify.verify_id(ffext.alloc_id())
+    return []
+
+g_move_offset = {
+    "LEFT_ARROW":(-1, 0),
+    "RIGHT_ARROW":(1, 0),
+    "UP_ARROW":(0, -1),
+    "DOWN_ARROW":(0, 1),
+}
+
+@ffext.reg(msg_def.client_cmd_e.INPUT_REQ, msg_def.input_req_t)
+def process_move(session, msg):
+    print('process_move', msg.ops)
+    now_tm = time.time()
+    if now_tm - session.player.last_move_tm < 0.1:
+        print('move too fast')
+        return
+    session.player.last_move_tm = now_tm
+    offset = g_move_offset.get(msg.ops)
+    if None == offset:
+        return
+    session.player.x += offset[0] * MOVE_SPEED
+    session.player.y += offset[1] * MOVE_SPEED
+    if session.player.x < 0:
+        session.player.x = 0
+    elif session.player.x > MAX_X:
+        session.player.x = MAX_X
+    if session.player.y < 0:
+        session.player.y = 0
+    elif session.player.y > MAX_Y:
+        session.player.y = MAX_Y
+
+    ret_msg     = msg_def.input_ret_t()
+    ret_msg.id  = session.get_id()
+    ret_msg.ops = msg.ops
+    ret_msg.x   = session.player.x
+    ret_msg.y   = session.player.y
+    print('input', ret_msg)
+
+    session.broadcast(msg_def.server_cmd_e.INPUT_RET, ret_msg)
+    return
+
+g_alloc_names = ['红', '明', '军', '兰', '猪', '楠', '微', '芳', '如', '熊', '牛', '兔', '七', '黄']
+@ffext.on_enter
+def real_session_enter(session, from_scene, extra_data):
+    session.player = player_t()
+    session.player.id = session.get_id()
+    session.player.name = '小' + g_alloc_names[session.get_id() % (len(g_alloc_names))]
+    session.player.x = 100 + random.randint(0, 300)
+    session.player.y = 100 + random.randint(0, 300)
+    
+    ret_msg = msg_def.login_ret_t()
+    ret_msg.id = session.get_id()
+    ret_msg.x  = session.player.x
+    ret_msg.y  = session.player.y
+    ret_msg.name = session.player.name
+    ret_msg.speed = MOVE_SPEED
+    
+    session.broadcast(msg_def.server_cmd_e.LOGIN_RET, ret_msg)
+    print('real_session_enter', ret_msg)
+    
+    def notify(tmp_session):
+        if tmp_session != session:
+            ret_msg.id = tmp_session.get_id()
+            ret_msg.x  = tmp_session.player.x
+            ret_msg.y  = tmp_session.player.y
+            ret_msg.name = tmp_session.player.name
+            session.send_msg(msg_def.server_cmd_e.LOGIN_RET, ret_msg)
+    ffext.get_session_mgr().foreach(notify)
+    return
+
+@ffext.on_logout
+def process_logout(session):
+    ret_msg = msg_def.logout_ret_t(session.get_id())
+    session.broadcast(msg_def.server_cmd_e.LOGOUT_RET, ret_msg)
+    print('process_logout', ret_msg)
+
+      </pre>
+		</textarea>
+		<textarea id="SrcMarkDown2" cols="80" rows="20" class="pane">
+# 总结
+* github:https://github.com/fanchy/ffengine
+* 构建程序 cd example/game && make
+* 运行程序 ./app_game -f default.config
+		</textarea>
+	</div>
+	
+    <!-- Load JS here for greater good =============================-->
+    <script src="../inc/js/jquery-1.8.3.min.js"></script>
+    <script src="../inc/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="../inc/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="../inc/js/bootstrap.min.js"></script>
+    <script src="../inc/js/bootstrap-select.js"></script>
+    <script src="../inc/js/bootstrap-switch.js"></script>
+    <script src="../inc/js/flatui-checkbox.js"></script>
+    <script src="../inc/js/flatui-radio.js"></script>
+    <script src="../inc/js/jquery.tagsinput.js"></script>
+    <script src="../inc/js/jquery.placeholder.js"></script>
+    <script src="../inc/js/jquery.stacktable.js"></script>
+    <!-- <script src="http://vjs.zencdn.net/c/video.js"></script>-->
+    <script src="../inc/js/application.js"></script>
+    <script src="../inc/js/jquery.json-2.4.js"></script>
+    
+    <script type="text/javascript" src="../html5_rpg/thrift.js"></script>
+	<script type="text/javascript" src="../html5_rpg/gen-js/rpg_types.js"></script>
+	<script type="text/javascript" src="../html5_rpg/crafty-min.js"></script>
+	<script type="text/javascript" src="../html5_rpg/ff.js"></script>
+	<script type="text/javascript" src="../html5_rpg/game.js"></script>
+    
+    <script type="text/javascript" src="../inc/js/showdown.js"></script>
+    <script type="text/javascript" src="../inc/syntaxhighlighter-2.1.382/scripts/brush.js"></script>
+	<link type="text/css" rel="stylesheet" href="../inc/syntaxhighlighter-2.1.382/styles/shCore.css"/>
+	<link type="text/css" rel="stylesheet" href="../inc/syntaxhighlighter-2.1.382/styles/shThemeDefault.css"/>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fc5875c0a7f78e3b8f758f907513834db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+  </body>
+</html>
+
+
+<script type="text/javascript">
+//! 解析markdown内容
+function ShowMarkdown(srcId, destId){
+	var src_content = $(srcId).val();
+	var converter = new Showdown.converter();
+	var ret = converter.makeHtml(src_content);
+	//alert(ret);
+	$(destId).html(ret);
+}
+//! 高亮代码
+function RenderCode(){
+	$(document).ready(function(){
+		SyntaxHighlighter.config.clipboardSwf = '../inc/syntaxhighlighter-2.1.382/scripts/clipboard.swf';
+		SyntaxHighlighter.all();
+	});
+}
+$(function(){
+	ShowMarkdown("#SrcMarkDown", "#ShowMarkDown");
+    ShowMarkdown("#SrcMarkDown2", "#ShowMarkDown3");
+	RenderCode();
+    startGame();
+});
+
+</script>

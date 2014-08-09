@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>ffEngine实时服务器云平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="../inc/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="../inc/css/flat-ui.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="./Public/images/favicon.ico">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+
+		<div class="row">
+			<div class="span6"><div class="row"><h1 class="demo-panel-title">ffEngine 实时服务器云平台</h1></div></div>
+			<div class="span6"><div class="row" height="20px"></br></br></br></div>
+				<div class="row"><h4>面向于端游、页游、手游服务器程序的云托管平台</h4></div>
+			</div>
+		</div>
+
+		<div class="row ">
+			<div >
+			  <div class="navbar navbar-inverse">
+				<div class="navbar-inner">
+				  <div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-01"></button>
+					<div class="nav-collapse collapse" id="nav-collapse-01">
+					  <ul class="nav">
+						<li>
+						  <a href="./index.php">
+							首页
+							<!-- <span class="navbar-unread">1</span>-->
+						  </a>
+						</li>
+						<li>
+						  <a href="./index.php?c=Ctrl&a=loginMenu">
+							登陆
+							<!-- <span class="navbar-unread">1</span>-->
+						  </a>
+						</li>
+						<li>
+						  <a href="./index.php?c=Ctrl&a=registerMenu">
+							注册
+							<!-- <span class="navbar-unread">1</span>-->
+						  </a>
+						</li>
+						<!-- <li class="active">-->
+						<li>
+						  <a href="#fakelink">
+							配置服务器
+							<!-- <span class="navbar-unread">1</span>-->
+						  </a>
+						  <ul>
+							<li><a href="./index.php?c=Ctrl&a=showServerListMenu">区组管理</a></li>
+							
+							<li><a href="#fakelink">服务器管理</a></li>
+						  </ul> <!-- /Sub menu -->
+						</li>
+						<li>
+						  <a href="#fakelink">
+							文档
+						  </a>
+						</li>
+                        <li>
+						  <a href="http://ffbbs.sinaapp.com">
+							论坛
+						  </a>
+						</li>
+						<li>
+						  <a href="#fakelink">
+							关于
+						  </a>
+						</li>
+					  </ul>
+					</div><!--/.nav -->
+				  </div>
+				</div>
+			  </div>
+			</div>
+        
+		</div> <!-- /row -->
+		<div class="row demo-row">
+			<div id="ShowMarkDown">
+			</div>
+		</div>
+	</div> <!-- /container -->
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="span7">
+            <h3 class="footer-title">参与其中</h3>
+            <p>ffEngine为开源项目，如果你也感兴趣，一起来贡献力量！</p>
+			<p>Code Repository ：<a href="https://github.com/fanchy/ffengine" target="_blank">https://github.com/fanchy/ffengine</a></p>
+			<p>Email：zxfown@gmail.com<p/>
+			<p>Weibo： <a href="http://weibo.com/zxfown" target="_blank"> http://weibo.com/zxfown </a> </p>
+			<p>QQ: 693654841 </p>
+			<p>Blog:  <a href="http://www.cnblogs.com/zhiranok" target="_blank"> http://www.cnblogs.com/zhiranok </a></p>
+          </div> <!-- /span8 -->
+
+          <div class="span5">
+            <div class="footer-banner">
+              <h3 class="footer-title">SLOGAN</h3>
+              <ul>
+                <li>无聊梦见忧郁，找到理想不太易</li>
+                <li>理想有日达成，找到心底梦想的世界</li>
+                <li>BEYOND！</li>
+              </ul>
+			  <h3 >COPYRIGHT</h3>
+			  <p> <a href="http://www.bootcss.com/" target="_blank">致谢Boostrap</a></p>
+			  <p> <a href="http://www.bootcss.com/p/flat-ui/" target="_blank">致谢FLAT UI</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <div id="div" style="display: none">
+		<textarea id="SrcMarkDown" cols="80" rows="20" class="pane">
+## 处理用户登录
+用户登录，客户端发送的第一个消息包位登录消息，python 处理登录消息，如果验证通过，必须分配一个唯一的user id，如果验证失败，分配user id =0，
+系统会自动断开和这个session的连接。@ffext.on_verify 修饰器用来处理此事件，其中session_verify 的verify_id 接口用于验证是否session请求有效。
+<pre class='brush: python'>
+
+@ffext.on_login(msg_def.client_cmd_e.LOGIN_REQ, msg_def.input_req_t)
+def process_login(session, msg): #session_key,
+    print('real_session_verify')
+    #本demo随便取了几个角色名，正常应该是用户输入
+    req_name = g_alloc_names[ffext.alloc_id() % (len(g_alloc_names))] 
+    
+    def callback(db_data):
+        #异步载入数据库，需要验证session是否仍然有效，有可能下线了
+        if session.is_valid() == False:
+            return
+        session.player = player_t()
+        session.player.name = req_name
+        if len(db_data) == 0:
+            session.verify_id(ffext.alloc_id())
+
+            session.player.id = session.get_id()
+            session.player.x = 100 + random.randint(0, 100)
+            session.player.y = 100 + random.randint(0, 100)
+
+            #创建新角色
+            new_data = {
+                'UID':session.player.id,
+                'NAME':session.player.name,
+                'X':session.player.x,
+                'Y':session.player.y,
+            }
+            db_service.insert_player(new_data)
+            print('create new player =%s'%(session.player.name))
+        else:
+            #载入数据
+            print(db_data)
+            print('load player =%s'%(session.player.name))
+            session.player.id = int(db_data['UID'])
+            session.player.x = int(db_data['X'])
+            session.player.y = int(db_data['Y'])
+            session.verify_id(session.player.id)
+        #发消息通知
+        ret_msg = msg_def.login_ret_t()
+        ret_msg.id = session.get_id()
+        ret_msg.x  = session.player.x
+        ret_msg.y  = session.player.y
+        ret_msg.name = session.player.name
+        ret_msg.speed = MOVE_SPEED
+        
+        session.broadcast(msg_def.server_cmd_e.LOGIN_RET, ret_msg)
+        print('real_session_enter', ret_msg)
+        
+        def notify(tmp_session):
+            if tmp_session != session:
+                ret_msg.id = tmp_session.get_id()
+                ret_msg.x  = tmp_session.player.x
+                ret_msg.y  = tmp_session.player.y
+                ret_msg.name = tmp_session.player.name
+                session.send_msg(msg_def.server_cmd_e.LOGIN_RET, ret_msg)
+        ffext.get_session_mgr().foreach(notify)
+        return
+    #异步载入数据库数据
+    db_service.load_by_name(req_name, callback)
+    return
+</pre>
+##  处理进入场景服务器
+两种情况会出现这个事件，session通过一账号验证默认进入场景0，即scene@0, 若session切换了，scene, 新的scene也会触发此事件.@ffext.on_enter用来处理
+进入场景消息，三个参数分别表示session对象，来自哪个scene（若为登录，则为空），extra_data 额外信息
+<pre class='brush: python'>
+
+@ffext.on_enter(msg_def.input_req_t)
+def process_enter(session, msg):
+    session.player = player_t()
+    param = msg.ops.split('_')
+    session.player.id = int(param[0])
+    session.verify_id(session.player.id)
+    
+    session.player.x = int(param[1])
+    session.player.y = int(param[2])
+    session.player.name = g_alloc_names[int(param[3])] 
+    print('process_enter', msg, session.socket_id)
+</pre>
+##  处理用户离线
+session下线，需要做一些额外清理操作@ffext.on_logout 用于处理此事件
+<pre class='brush: python'>
+@ffext.on_logout
+def process_logout(session):
+    ret_msg = msg_def.logout_ret_t(session.get_id())
+    session.broadcast(msg_def.server_cmd_e.LOGOUT_RET, ret_msg)
+    
+    db_data = {
+        'X': session.player.x,
+        'Y': session.player.y,
+    }
+    db_service.update_player(session.get_id(), db_data)
+    print('process_logout', ret_msg, session.socket_id)
+
+</pre>
+     
+##  处理逻辑消息
+修饰器@ffext.reg 需要两个参数对应的cmd值和请求消息，比如下边这个处理角色移动的接口，session为角色的session结构，msg就是修饰器对应的消息类型，
+ffEngine 会自动为其解析消息
+<pre class='brush: python'>
+@ffext.reg(msg_def.client_cmd_e.INPUT_REQ, msg_def.input_req_t)
+def process_move(session, msg):
+    print('process_move %s %s'%(session.player.name, msg.ops))
+    now_tm = time.time()
+    if now_tm - session.player.last_move_tm < 0.1:
+        print('move too fast')
+        return
+    session.player.last_move_tm = now_tm
+    offset = g_move_offset.get(msg.ops)
+    if None == offset:
+        return
+    session.player.x += offset[0] * MOVE_SPEED
+    session.player.y += offset[1] * MOVE_SPEED
+    if session.player.x < 0:
+        session.player.x = 0
+    elif session.player.x > MAX_X:
+        session.player.x = MAX_X
+    if session.player.y < 0:
+        session.player.y = 0
+    elif session.player.y > MAX_Y:
+        session.player.y = MAX_Y
+
+    ret_msg     = msg_def.input_ret_t()
+    ret_msg.id  = session.get_id()
+    ret_msg.ops = msg.ops
+    ret_msg.x   = session.player.x
+    ret_msg.y   = session.player.y
+    print('input', ret_msg)
+
+    session.broadcast(msg_def.server_cmd_e.INPUT_RET, ret_msg)
+    #下面的代码模拟的是调scene，goto_scene直接完成调scene，so easy!
+    #由于本demo没有启动多个scene，所以这里只是把player对象传过去，没有给client发送player消失消息
+    goto_msg = msg_def.input_req_t()
+    goto_msg.ops = '%d_%d_%d_%d'%(session.get_id(), session.player.x, session.player.y,
+                                 g_alloc_names.index(session.player.name))
+    
+    print('goto_msg:', goto_msg)
+    session.goto_scene('scene@0', goto_msg)
+    return
+</pre>
+
+##  <a name="db"> 数据库操作接口 </a>
+ffdb 对象封装了针对mysql的同步异步接口，需要注意的是，ffdb创建的数据库对象要么用于同步调用，要么用于异步调用，不能既用
+同步调用又用异步接口。 同步接口示例:
+<pre class='brush: python'>
+db = ffext.ffdb_create('mysql://localhost:3306/root/pass/dbname')
+sql = "select `ID`, `REAL_NAME` FROM `player_register` WHERE `NAME` = '%s'" % (player.nick_name)
+ret = db.sync_query(sql)
+print(ret.result)
+if len(ret.result) == 0:
+	ffext.ERROR('verify_password无此账号[%s]'%(sql))
+	return False
+player.set_id(int(ret.result[0][0]))
+player.real_name = ret.result[0][1]
+</pre>
+异步接口示例:
+<pre class='brush: python'>
+db = ffext.ffdb_create('mysql://localhost:3306/root/pass/dbname')
+sql = "select `ID`, `REAL_NAME` FROM `player_register` WHERE `NAME` = '%s'" % (player.nick_name)
+def cb(ret):
+	if ret.flag == False or len(ret.result) == 0:
+		ffext.ERROR('load_player 载入数据出错%s'%(sql))
+		return
+	print('async_select', ret.result)
+	
+	player.set_id(int(ret.result[0][0]))
+	player.real_name = ret.result[0][1]
+db.query(sql, cb)
+</pre>
+		</textarea>
+		<textarea id="SrcMarkDown2" cols="80" rows="20" class="pane">
+# 总结
+* github:https://github.com/fanchy/ffengine
+* 构建程序 cd example/game && make
+* 运行程序 ./app_game -f default.config
+* 完整rpg 示例详见：http://ffown.sinaapp.com/front/game_tutorial.html
+		</textarea>
+	</div>
+	
+    <!-- Load JS here for greater good =============================-->
+    <script src="../inc/js/jquery-1.8.3.min.js"></script>
+    <script src="../inc/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="../inc/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="../inc/js/bootstrap.min.js"></script>
+    <script src="../inc/js/bootstrap-select.js"></script>
+    <script src="../inc/js/bootstrap-switch.js"></script>
+    <script src="../inc/js/flatui-checkbox.js"></script>
+    <script src="../inc/js/flatui-radio.js"></script>
+    <script src="../inc/js/jquery.tagsinput.js"></script>
+    <script src="../inc/js/jquery.placeholder.js"></script>
+    <script src="../inc/js/jquery.stacktable.js"></script>
+    <!-- <script src="http://vjs.zencdn.net/c/video.js"></script>-->
+    <script src="../inc/js/application.js"></script>
+    <script src="../inc/js/jquery.json-2.4.js"></script>
+    
+    <script type="text/javascript" src="../inc/js/showdown.js"></script>
+    <script type="text/javascript" src="../inc/syntaxhighlighter-2.1.382/scripts/brush.js"></script>
+	<link type="text/css" rel="stylesheet" href="../inc/syntaxhighlighter-2.1.382/styles/shCore.css"/>
+	<link type="text/css" rel="stylesheet" href="../inc/syntaxhighlighter-2.1.382/styles/shThemeDefault.css"/>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fc5875c0a7f78e3b8f758f907513834db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+  </body>
+</html>
+
+
+<script type="text/javascript">
+//! 解析markdown内容
+function ShowMarkdown(srcId, destId){
+	var src_content = $(srcId).val();
+	var converter = new Showdown.converter();
+	var ret = converter.makeHtml(src_content);
+	//alert(ret);
+	$(destId).html(ret);
+}
+//! 高亮代码
+function RenderCode(){
+	$(document).ready(function(){
+		SyntaxHighlighter.config.clipboardSwf = '../inc/syntaxhighlighter-2.1.382/scripts/clipboard.swf';
+		SyntaxHighlighter.all();
+	});
+}
+$(function(){
+	ShowMarkdown("#SrcMarkDown", "#ShowMarkDown");
+	RenderCode();
+});
+
+</script>
