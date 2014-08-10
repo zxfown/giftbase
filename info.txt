@@ -1,0 +1,10 @@
+questions 表记录的是所有的题目id 对应 single_choice_options  的question_id
+	stage_id 对应 stages表的id
+single_choice_options 记录的是单选题的答案
+units 记录的试卷信息，id 对应 question_groups 表的unit_id 字段，试卷可能有多个question_groups 行记录，比如一行是单选题，
+	一行 是简单题 position 排序.
+question_groups 记录的是试卷的各个题型，比如第一大题为单选，第二为简答等，id字段对应着question_line_items的
+	question_group_id字段， 对应多行，比如单选就对应30行， position 排序.
+question_line_items  记录各个题型对应的几个小题，比如选择题可能有30道，question_id 对应 questions表
+
+stages 表示的是套装信息

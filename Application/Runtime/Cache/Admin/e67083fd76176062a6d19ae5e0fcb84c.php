@@ -87,7 +87,7 @@
           <div class="page-header ">
             <div class="titlebar">
               <div class="row-fluid">
-                <div class="span9"> <h1>题目列表</h1> </div>
+                <div class="span9"> <h1> <?php echo ($data["unit"]["name"]); ?>  <small>  <?php echo ($data["unit"]["taozhuang"]["name"]); ?> </small></h1> </div>
                 <div class="span3">
                   <div class="toolbar">
                     <div class="btn-group">
@@ -114,61 +114,69 @@
                   <form accept-charset="UTF-8" action="/admin/questions" class="well" id="question_search" method="get">
                     <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
                     <div class="controls-row">
-                      <select class="span3" id="q_type_eq" name="q[type_eq]"><option value="">所有题型</option>
-                        <option value="Question::FillInBlank">填空题</option>
-                        <option value="Question::Matching">配对题</option>
-                        <option value="Question::Brief">问答题</option>
-                        <option value="Question::MultipleChoice">多选题</option>
-                        <option value="Question::SingleChoice">单选题</option>
-                      </select>
-                      <input class="span9" id="q_subject_cont" name="q[subject_cont]" placeholder="搜索题干" size="30" type="text" />
-                    </div>
+                      <div class="type pull-left"> 一. 单选题 </div>
+                      <div class="actions pull-right">
+                        <a href="/admin/questions/39952/edit" class="btn btn-small btn-primary" target="_blank">编辑</a>
 
-                    <div class="controls-row">
-                      <label class="span3" for="q_level">难度</label>
-                      <select class="span4" id="q_question_level_id_gteq" name="q[question_level_id_gteq]">
-                        <option value="1" selected="selected">简单</option>
-                      </select>
-                      <div class="text span1 text-center"></div>
-                      <select class="span4" id="q_question_level_id_lteq" name="q[question_level_id_lteq]">
-                        <option value="1" selected="selected">简单</option>
-                      </select>
-                    </div>
-                    <div class="controls-row">
-                      <label class="span3" for="q_序号">序号</label>
-                      <input class="span4" id="question_id" name="question_id" type="text" />
-                    </div>
-                    <div class="text-right">
-                      <input class="btn btn-primary" name="commit" type="submit" value="搜索" />
+                        <div class="btn-group">
+
+                              <a href="#" class="btn btn-small disabled">上移</a>
+
+                              <a href="/admin/units/1042/question_groups/1369/question_line_items/49760/move_lower" class="btn btn-small" data-method="post" rel="nofollow">下移</a>
+
+                            <a href="/admin/units/1042/question_groups/1369/remove_question?question_id=39952" class="btn btn-small" data-method="post" rel="nofollow">移除</a>
+                        </div>
+                      </div>
+
                     </div>
                   </form>
 
-                  <table class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>
-                          序号
-                        </th>
-                        <th>类型</th>
-                        <th>题干</th>
-                        <th>操作</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-<?php
- function EditHref($a){ if ($a == 'Question::SingleChoice' || $a == 'Question::MultipleChoice') return 'editXuanZeTi'; return $a; } function showHref($a){ if ($a == 'Question::SingleChoice' || $a == 'Question::MultipleChoice') return 'showXuanZeTi'; return $a; } ?>
-                        <?php if(is_array($data)): foreach($data as $key=>$vo): ?><tr>
-                          <td><?php echo ($vo["id"]); ?></td>
-                          <td><?php echo (converttypestr($vo["type"])); ?></td>
-                          <td><?php echo ($vo["subject"]); ?></td>
-                          <td class="control span2">
-                            <a href="/giftbase/trunk/Admin/Question/<?php echo (showhref($vo["type"])); ?>?id=<?php echo ($vo["id"]); ?>">查看</a>
-                            <a href="/giftbase/trunk/Admin/Question/<?php echo (edithref($vo["type"])); ?>?id=<?php echo ($vo["id"]); ?>">编辑</a>
-                          </td>
-                        </tr><?php endforeach; endif; ?>
-                      </tbody>
-                    </table>
-                    <?php echo ($page); ?>
+<?php if(is_array($data["question_data"])): foreach($data["question_data"] as $k=>$vo): ?><ul class="selectable-question-list">
+    <li>
+      <div class="item">
+        <div class="header clearfix">
+          <div class="type pull-left">
+              <?php echo ($k); ?>
+            <?php echo (converttypestr($vo["type"])); ?>
+          </div>
+
+          <div class="actions pull-right">
+            <a href="/admin/questions/39952/edit" class="btn btn-small btn-primary" target="_blank">编辑</a> 
+            <div class="btn-group"> 
+              <a href="#" class="btn btn-small disabled">上移</a>
+              <a href="/admin/units/1042/question_groups/1369/question_line_items/49760/move_lower" class="btn btn-small" data-method="post" rel="nofollow">下移</a>
+              <a href="/admin/units/1042/question_groups/1369/remove_question?question_id=39952" class="btn btn-small" data-method="post" rel="nofollow">移除</a>
+            </div>
+          </div>
+        </div> 
+        <div class="content">
+          <div class="clearfix">
+            <div class="pull-left">
+              <p><?php echo ($vo["subject"]); ?></p>
+             </div>
+      <div>
+      </div>
+    </div>
+
+    <ol type="A">
+      <?php if(is_array($vo["single_choice_options"])): foreach($vo["single_choice_options"] as $key=>$vo2): ?><li>
+        <p><?php echo ($vo2["content"]); ?></p>
+        <div>
+        </div>      
+      </li><?php endforeach; endif; ?>
+    </ol>
+
+  </div>
+
+  <div class="clearfix footer">
+    <div class="pull-left">解题提示:</div>
+    <div class="pull-right">难度:简单</div>
+  </div>
+  </div>
+
+    </li>
+
+    </ul><?php endforeach; endif; ?>
                 </div><!--<div class="content-main">-->
               </dic><!-- <div class="span12"> -->
             </div><!-- <div class="row-fluid"> -->

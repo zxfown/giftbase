@@ -2,9 +2,9 @@
 namespace Admin\Model;
 use Think\Model\RelationModel;
 
-class QuestionsModel extends RelationModel 
+class UnitModel extends RelationModel 
 {    
-	protected $tableName  = 'questions';
+	protected $tableName  = 'units';
     protected $tablePrefix = '';
     protected $_link = array(
                             'taozhuang'=>array(
@@ -13,13 +13,12 @@ class QuestionsModel extends RelationModel
                                 'foreign_key'       => 'stage_id',       
                                 // 定义更多的关联属性            ……            
                             ), 
-                            'single_choice_options'=>array(
-                                'mapping_type'      => self::HAS_MANY,            
-                                'class_name'        => 'single_choice_options',     
-                                'foreign_key'       => 'question_id',
-                                'mapping_order'     => 'position asc',        
+                            'question_groups'  =>array(
+                                'mapping_type'      => self::HAS_ONE,            
+                                'class_name'        => 'QuestionGroups' ,     
+                                'foreign_key'       => 'unit_id',       
                                 // 定义更多的关联属性            ……            
-                            ),        
+                            ), 
                         );
 }
 

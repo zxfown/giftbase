@@ -1,0 +1,114 @@
+
+    <include file="Common:header" />
+    <div id="wrap">
+      <div class="container">
+
+        <div class="content">
+
+          <div class="page-header ">
+            <div class="titlebar">
+              <div class="row-fluid">
+                <div class="span9"> <h1> <{$data.unit.name}>  <small>  <{$data.unit.taozhuang.name}> </small></h1> </div>
+                <div class="span3">
+                  <div class="toolbar">
+                    <div class="btn-group">
+                      <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">新增 <span class="caret"></span></button>
+                      <ul class="dropdown-menu pull-right">
+                          <!-- <li><a href="__MODULE__/Question/addSingleChoice">填空题</a></li>
+                          <li><a href="/admin/questions/new?type=Question%3A%3AMatching">配对题</a></li>
+                          <li><a href="/admin/questions/new?type=Question%3A%3ABrief">问答题</a></li>
+                          <li><a href="/admin/questions/new?type=Question%3A%3AMultipleChoice">多选题</a></li>
+                          -->
+                          <li><a href="__MODULE__/Question/showAddSingleChoice">单选题</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-content">
+            <div class="row-fluid">
+              <div class="span12">
+                <div class="content-main">
+                  <form accept-charset="UTF-8" action="/admin/questions" class="well" id="question_search" method="get">
+                    <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+                    <div class="controls-row">
+                      <div class="type pull-left"> 一. 单选题 </div>
+                      <div class="actions pull-right">
+                        <a href="/admin/questions/39952/edit" class="btn btn-small btn-primary" target="_blank">编辑</a>
+
+                        <div class="btn-group">
+
+                              <a href="#" class="btn btn-small disabled">上移</a>
+
+                              <a href="/admin/units/1042/question_groups/1369/question_line_items/49760/move_lower" class="btn btn-small" data-method="post" rel="nofollow">下移</a>
+
+                            <a href="/admin/units/1042/question_groups/1369/remove_question?question_id=39952" class="btn btn-small" data-method="post" rel="nofollow">移除</a>
+                        </div>
+                      </div>
+
+                    </div>
+                  </form>
+
+<foreach name="data.question_data" item="vo"  key="k" >      
+  <ul class="selectable-question-list">
+    <li>
+      <div class="item">
+        <div class="header clearfix">
+          <div class="type pull-left">
+              <{$k}>
+            <{$vo.type|convertTypeStr}>
+          </div>
+
+          <div class="actions pull-right">
+            <a href="/admin/questions/39952/edit" class="btn btn-small btn-primary" target="_blank">编辑</a> 
+            <div class="btn-group"> 
+              <a href="#" class="btn btn-small disabled">上移</a>
+              <a href="/admin/units/1042/question_groups/1369/question_line_items/49760/move_lower" class="btn btn-small" data-method="post" rel="nofollow">下移</a>
+              <a href="/admin/units/1042/question_groups/1369/remove_question?question_id=39952" class="btn btn-small" data-method="post" rel="nofollow">移除</a>
+            </div>
+          </div>
+        </div> 
+        <div class="content">
+          <div class="clearfix">
+            <div class="pull-left">
+              <p><{$vo.subject}></p>
+             </div>
+      <div>
+      </div>
+    </div>
+
+    <ol type="A">
+      <foreach name="vo.single_choice_options" item="vo2" >
+      <li>
+        <p><{$vo2.content}></p>
+        <div>
+        </div>      
+      </li>
+      </foreach>
+    </ol>
+
+  </div>
+
+  <div class="clearfix footer">
+    <div class="pull-left">解题提示:</div>
+    <div class="pull-right">难度:简单</div>
+  </div>
+  </div>
+
+    </li>
+
+    </ul>  
+</foreach>
+                </div><!--<div class="content-main">-->
+              </dic><!-- <div class="span12"> -->
+            </div><!-- <div class="row-fluid"> -->
+          </div><!-- <div class="page-content"> -->
+  		  </div><!-- /content -->
+      </div> <!-- /container -->
+    </div><!-- wrap -->
+    <include file="Common:footer" />
+
+

@@ -8,20 +8,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Loading Bootstrap -->
-    <link href="/ff/Public/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/ff/Public/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="/ff/Public/lib/bootstrap/css/docs.css" rel="stylesheet">
+    <link href="/giftbase/trunk/Public/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/giftbase/trunk/Public/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/giftbase/trunk/Public/lib/bootstrap/css/docs.css" rel="stylesheet">
 
-    <link href="/ff/Public/lib/old/css/application.css?body=1" media="all" rel="stylesheet" type="text/css" />
+    <link href="/giftbase/trunk/Public/lib/old/css/application.css?body=1" media="all" rel="stylesheet" type="text/css" />
     <!-- Loading Flat UI -->
-    <!--<link href="/ff/Public/lib/flatui/css/flat-ui.css" rel="stylesheet"> -->
+    <!--<link href="/giftbase/trunk/Public/lib/flatui/css/flat-ui.css" rel="stylesheet"> -->
 
-    <link rel="shortcut icon" href="/ff/Public/images/favicon.ico">
+    <link rel="shortcut icon" href="/giftbase/trunk/Public/images/favicon.ico">
 
     
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="/ff/Public/lib/bootstrap/js/html5shiv.min.js"></script>
+      <script src="/giftbase/trunk/Public/lib/bootstrap/js/html5shiv.min.js"></script>
     <![endif]-->
     <style>
 		body {
@@ -44,29 +44,29 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="/ff/Admin">Giftbase天才训练营</a>
+          <a class="brand" href="/giftbase/trunk/Admin">Giftbase天才训练营</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="">
-                <a href="/ff">信息中心</a>
+                <a href="/giftbase/trunk">信息中心</a>
               </li>
               <li class=""><!-- active -->
-                <a href="/ff/Admin/Question">题目</a>
+                <a href="/giftbase/trunk/Admin/Question">题目</a>
               </li>
               <li class="">
-                <a href="/ff/Admin/Register">注册</a>
+                <a href="/giftbase/trunk/Admin/Unit">试卷</a>
               </li>
               <li class="">
-                <a href="/ff/Admin/">配置</a>
+                <a href="/giftbase/trunk/Admin/">配置</a>
               </li>
               <li class="">
-                <a href="/ff/Admin/News">News</a>
+                <a href="/giftbase/trunk/Admin/News">News</a>
               </li>
               <li class="">
-                <a href="/ff/Admin/Info">信息</a>
+                <a href="/giftbase/trunk/Admin/Info">信息</a>
               </li>
               <li class="">
-                <a href="/ff/Admin/About">about</a>
+                <a href="/giftbase/trunk/Admin/About">about</a>
               </li>
             </ul>
           </div>
@@ -90,14 +90,14 @@
                 <div class="span7"> <h1>查看题目详细</h1> </div>
                 <div class="span5">
                   <div class="toolbar">
-                    <a href="/ff/Admin/Question/editXuanZeTi?id=<?php echo ($data["id"]); ?>" class="btn btn-primary">编辑</a>
+                    <a href="/giftbase/trunk/Admin/Question/editXuanZeTi?id=<?php echo ($data["id"]); ?>" class="btn btn-primary">编辑</a>
                     <div class="btn-group">
                       <button class="btn dropdown-toggle" data-toggle="dropdown">更多操作 <span class="caret"></span></button>
                       <ul class="dropdown-menu pull-right">
                         <li><a href="/admin/questions/39983" data-confirm="确定要删除吗？删除后不能恢复！" data-method="delete" rel="nofollow">删除</a></li>
                       </ul>
                     </div>
-                    <a href="/ff/Admin/Question" class="btn">返回</a>
+                    <a href="/giftbase/trunk/Admin/Question" class="btn">返回</a>
                   </div>
                 </div>
               </div>
@@ -140,11 +140,11 @@
     ================================================== -->
     <div id="footer">
         <div class="container">
-          <p class="muted credit">Copy Right <a href="/ff">Giftbase天才训练营</a> .</p>
+          <p class="muted credit">Copy Right <a href="/giftbase/trunk">Giftbase天才训练营</a> .</p>
         </div>
     </div>
   
-    <script src="/ff/Public/lib/jquery/js/jquery-1.8.3.min.js"></script>
-    <script src="/ff/Public/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/giftbase/trunk/Public/lib/jquery/js/jquery-1.8.3.min.js"></script>
+    <script src="/giftbase/trunk/Public/lib/bootstrap/js/bootstrap.min.js"></script>
   </body> 
 </html>

@@ -8,7 +8,7 @@
           <div class="page-header ">
             <div class="titlebar">
               <div class="row-fluid">
-                <div class="span9"> <h1>题目列表</h1> </div>
+                <div class="span9"> <h1>试卷列表</h1> </div>
                 <div class="span3">
                   <div class="toolbar">
                     <div class="btn-group">
@@ -35,43 +35,25 @@
                   <form accept-charset="UTF-8" action="/admin/questions" class="well" id="question_search" method="get">
                     <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
                     <div class="controls-row">
-                      <select class="span3" id="q_type_eq" name="q[type_eq]"><option value="">所有题型</option>
-                        <option value="Question::FillInBlank">填空题</option>
-                        <option value="Question::Matching">配对题</option>
-                        <option value="Question::Brief">问答题</option>
-                        <option value="Question::MultipleChoice">多选题</option>
-                        <option value="Question::SingleChoice">单选题</option>
+                      <select class="span3" id="q_stage_grade_id_eq" name="q[stage_grade_id_eq]"><option value="">全部</option>
                       </select>
-                      <input class="span9" id="q_subject_cont" name="q[subject_cont]" placeholder="搜索题干" size="30" type="text" />
-                    </div>
-
-                    <div class="controls-row">
-                      <label class="span3" for="q_level">难度</label>
-                      <select class="span4" id="q_question_level_id_gteq" name="q[question_level_id_gteq]">
-                        <option value="1" selected="selected">简单</option>
+                      <select class="span3" id="q_stage_id_eq" name="q[stage_id_eq]"><option value="">全部</option>
                       </select>
-                      <div class="text span1 text-center"></div>
-                      <select class="span4" id="q_question_level_id_lteq" name="q[question_level_id_lteq]">
-                        <option value="1" selected="selected">简单</option>
-                      </select>
-                    </div>
-                    <div class="controls-row">
-                      <label class="span3" for="q_序号">序号</label>
-                      <input class="span4" id="question_id" name="question_id" type="text" />
-                    </div>
-                    <div class="text-right">
-                      <input class="btn btn-primary" name="commit" type="submit" value="搜索" />
+                      <input class="span5" id="q_name_cont" name="q[name_cont]" placeholder="搜索名称" size="30" type="text" />
+                      <div class="text-right">
+                        <input class="btn btn-primary" name="commit" type="submit" value="搜索" />
+                      </div>
                     </div>
                   </form>
 
                   <table class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>
-                          序号
-                        </th>
-                        <th>类型</th>
-                        <th>题干</th>
+                        <th>序号</th>
+                        <th>试卷套装</th>
+                        <th>名称</th>
+                        <th>考试时间(分)</th>
+                        <th>邮箱</th>
                         <th>操作</th>
                       </tr>
                     </thead>
@@ -90,12 +72,14 @@
 ?>
                         <foreach name="data" item="vo" >      
                         <tr>
-                          <td><{$vo.id}></td>
-                          <td><{$vo.type|convertTypeStr}></td>
+                          <td><{$vo.position}></td>
+                          <td><{$vo.taozhuang.name}></td>
+                          <td><{$vo.name}></td>
+                          <td><{$vo.exam_minutes}></td>
                           <td><{$vo.subject}></td>
                           <td class="control span2">
-                            <a href="__MODULE__/Question/<{$vo.type|showHref}>?id=<{$vo.id}>">查看</a>
-                            <a href="__MODULE__/Question/<{$vo.type|EditHref}>?id=<{$vo.id}>">编辑</a>
+                            <a href="__MODULE__/Unit/showUnitItem?id=<{$vo.id}>">查看</a>
+                            <a href="__MODULE__/Question/showUnitEdit?id=<{$vo.id}>">编辑</a>
                           </td>
                         </tr>
                         </foreach>

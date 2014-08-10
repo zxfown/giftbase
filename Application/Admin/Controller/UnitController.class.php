@@ -2,9 +2,9 @@
 	
 namespace Admin\Controller;
 use Think\Controller;
-class QuestionController extends Controller {
+class UnitController extends Controller {
     private function GetModel(){
-        $obj = D('Questions');
+        $obj = D('Unit');
         $obj->relation(true);
         return $obj;
     }
@@ -12,7 +12,7 @@ class QuestionController extends Controller {
     	$Mobj   = $this->GetModel();
     	$result = $Mobj->order('updated_at desc')->page(I('p', '0').',20')->select();
 
-    	//dump($result);
+    	//dump($result[0]);
     	$count      = $Mobj->count();
     	$Page       = new \Think\Page($count,20);
     	$Page->lastSuffix = false;
@@ -30,18 +30,34 @@ class QuestionController extends Controller {
     	$this->assign('page', $show);// 赋值分页输出
     	$this->display();
     }
-    public function showXuanZeTi(){
+    public function showUnitItem(){
+        $id = I('id', '0');
         $Mobj   = $this->GetModel();
-        $result = $Mobj->where(array('id' => I('id', 0)))->limit(1)->find();
-        $this->assign('data', $result);
-
-        if ($result['type'] == 'Question::SingleChoice'){
-            $select_obj = D('single_choice_options');
-            $select_data= $select_obj->where(array('question_id'=>$result['id']))->order('position')->select();
-            //dump($select_data);
-            $this->assign('selectData', $select_data);
+        $result = $Mobj->where(array('id' => $id))->find();
+        
+        // dump($result);
+        $stage_id = $result['stage_id'];
+        $question_id = $result['question_id'];
+        // dump($stage_id);
+        // echo M()->getLastSql();
+        $unit_id = $result['unit_id'];
+        $retQuestionItem = D('QuestionGroups')->relation(true)->where(array('unit_id' => $id))->limit(1)->find();
+        // dump($retQuestionItem);
+        // echo M()->getLastSql();
+        $question_data = array();
+        foreach ($retQuestionItem['question_line_items'] as $key => $value) {
+            $retQuestion = D('Questions')->relation(true)->where(array('id' => $value['question_id']))->find();
+              
+            // echo M()->getLastSql();
+            $question_data[$key + 1] = $retQuestion;
         }
-        //dump($result);
+        // dump($question_data[1]);
+        $ret_data = array(
+                'unit'          => $result ,
+                'question_data' => $question_data,
+            );
+        $this->assign('data', $ret_data);
+
         $this->display();
     }
     public function editXuanZeTi(){
